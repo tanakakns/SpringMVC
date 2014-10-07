@@ -2,6 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'war'
 apply plugin: 'tomcat'
+apply plugin: 'flyway'
 
 buildscript {
     repositories {
@@ -10,6 +11,20 @@ buildscript {
     dependencies {
         classpath 'org.gradle.api.plugins:gradle-tomcat-plugin:1.2.4'
     }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'org.apache.derby:derby:10.11.1.1'
+        classpath 'org.flywaydb:flyway-gradle-plugin:3.0'
+    }
+}
+
+flyway {
+    url = 'jdbc:derby:H:/Derby/sample1;create=true'
 }
 
 repositories {
@@ -22,6 +37,9 @@ dependencies {
     runtime 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
     runtime 'javax.xml.bind:jaxb-api:2.2.11'
     //runtime 'com.sun.xml.bind:jaxb-impl:2.2'
+    compile 'org.apache.derby:derby:10.11.1.1'
+    compile 'org.springframework.data:spring-data-jpa:1.7.0.RELEASE'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.6.0-M3'
 
     def tomcatVersion = '8.0.12'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",

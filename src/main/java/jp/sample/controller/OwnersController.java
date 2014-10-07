@@ -3,7 +3,9 @@ package jp.sample.controller;
 import java.util.List;
 
 import jp.sample.model.Owner;
+import jp.sample.repository.OwnerRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,11 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/owners")
 public class OwnersController {
 
+	@Autowired
+	private OwnerRepository repository;
+
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
 	public List<Owner> list() {
 		System.out.println("Get Owners.");
-		return null;
+		return (List<Owner>) repository.findAll();
 	}
 
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)

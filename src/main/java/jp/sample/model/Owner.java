@@ -1,9 +1,23 @@
 package jp.sample.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Owner {
+
+	@Id
 	private String id;
 	private String name;
 	private String age;
+
+	public Owner() {}
+
+	public Owner(String name, String age) {
+		this.name = name;
+		this.age = age;
+	}
+
 	public String getId() {
 		return id;
 	}
