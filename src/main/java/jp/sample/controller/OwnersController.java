@@ -3,7 +3,7 @@ package jp.sample.controller;
 import java.util.List;
 
 import jp.sample.model.Owner;
-import jp.sample.repository.OwnerRepository;
+import jp.sample.repositories.OwnerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

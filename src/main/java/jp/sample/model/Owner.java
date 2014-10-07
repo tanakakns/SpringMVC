@@ -1,10 +1,12 @@
 package jp.sample.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class Owner {
+public class Owner implements Serializable {
 
 	@Id
 	private String id;

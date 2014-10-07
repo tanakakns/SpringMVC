@@ -6,7 +6,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -15,7 +17,8 @@ import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
-// @EnableJpaRepositories("")
+@EnableJpaRepositories("jp.sample.repositories")
+@ComponentScan(basePackages = { "jp.sample" })
 @Configuration
 public class AppConfig {
 
@@ -40,13 +43,16 @@ public class AppConfig {
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource());
-		em.setPackagesToScan(new String[] {"jp.sample.repositories"});
+		em.setPackagesToScan(new String[] {"jp.sample.repositories", "jp.sample.model"});
 
 		em.setJpaVendorAdapter(jpaVendorAdapter());
 
 		Properties p = new Properties();
 		// p.setProperty("", "");
+		p.setProperty("eclipselink.weaving", "false");
 		em.setJpaProperties(p);
+
+		//em.setLoadTimeWeaver(new InstrumentationLoadTimeWeaver());
 
 		return em;
 	}
@@ -57,5 +63,4 @@ public class AppConfig {
 		transactionManager.setEntityManagerFactory(emf);
 		return transactionManager;
 	}
-
 }
